@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block pageheader %}
+{# <div class="span-12 prepend-6 append-6 last" align="center"><h3>Sell List</h3></div> #}
+{% endblock %}
+
+{% block content %}
+{% if perms.books.add_book %}
+{% include "book_add.html" %}
+{% endif %}
+
+<div id="book_list span-24 last">
+
+{% for book in books %}
+{% include "book_list.html" %}
+{% endfor %}
+</div>
+{% endblock %}

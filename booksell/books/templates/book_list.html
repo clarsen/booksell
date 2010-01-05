@@ -1,0 +1,44 @@
+{% load humanize %}
+<div class="book span-24 last">
+  <div class="book-image span-2">
+    <img src="{{book.image}}" width="{{book.image_width}}" height="{{book.image_height}}"/>
+    <div class="book-detail span-last"><a href="{{book.detail_page}}">details</a>, <a href="{% url books.views.asxml book.asin %}">xml</a></div>
+  </div>
+  <div class="span-22 last">
+    <div class="book-title span-22 last"><strong>{{book.title}}</strong></div>
+    <div class="book-author span-19">by {{book.authors}}</div>
+    <div class="push-3 last">Amazon sales rank: {{book.salesrank|intcomma}}</div>
+    <div class="span-4">EAN#: {{book.ean}}</div>
+    <div class="span-4">Location: {{book.location}}</div>
+    
+    <div class="span-22 last"><hr/></div>
+    <div class="price-label span-3 pull-2" align="right">List Price</div>
+    <div class="book-price list-price span-1">${{book.list_price}}</div>
+
+    <div class="price-label span-3" align="right">New Price</div>
+    <div class="book-price new-price span-1 last">${{book.new_price}}</div>
+
+    {% if book.mint_n %}
+    <div class="span-22 last"></div>
+    <div class="price-label span-3 pull-2" align="right">Used/Like New</div>
+    <div class="book-price list-price span-6">qty {{book.mint_n}}: {{ book.mint_min}} - {{book.mint_p25}} - {{book.mint_med}} - {{ book.mint_p75 }} - {{ book.mint_max }}</div>
+    {% endif %}
+    {% if book.vg_n %}
+    <div class="span-22 last"></div>
+    <div class="price-label span-3 pull-2" align="right">Used/Very Good</div>
+    <div class="book-price list-price span-6">qty {{book.vg_n}}: {{ book.vg_min}} - {{book.vg_p25}} - {{book.vg_med}} - {{ book.vg_p75 }} - {{ book.vg_max }}</div>
+    {% endif %}
+    {% if book.g_n %}
+    <div class="span-22 last"></div>
+    <div class="price-label span-3 pull-2" align="right">Used/Good</div>
+    <div class="book-price list-price span-6">qty {{book.g_n}}: {{ book.g_min}} - {{book.g_p25}} - {{book.g_med}} - {{ book.g_p75 }} - {{ book.g_max }}</div>
+    {% endif %}
+    {% if book.a_n %}
+    <div class="span-22 last"></div>
+    <div class="price-label span-3 pull-2" align="right">Used/Acceptable</div>
+    <div class="book-price list-price span-6">qty {{book.a_n}}: {{ book.a_min}} - {{book.a_p25}} - {{book.a_med}} - {{ book.a_p75 }} - {{ book.a_max }}</div>
+    {% endif %}
+
+  </div>
+  <div class="span-24 last">&nbsp;<hr/></div>
+</div>

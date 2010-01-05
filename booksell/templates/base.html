@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>{% block title %}Sell list{% endblock %}</title>
+    {% block javascripts %}
+    
+    {% if settings.DEBUG %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery/jquery-1.3.2.js"></script>
+    {% else %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    {% endif %}
+
+    {% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    {% endblock %}
+    {% block extra_head %} {% endblock %}
+  </head>
+  <body id="pagebody">
+    <div class="container">
+      <div class="span-24 header last">{% block header %}<h1>Sell list</h1>{% endblock %}</div>
+      <div class="push-1 last">
+      {% if user.is_authenticated %}
+      Welcome, {{ user }}:
+      {% if perms.books.add_book %}
+        <a href="{% url books.views.add %}">add book(s)</a>/
+      {% endif %}
+      <a href="{% url booksell.views.logout_view %}">logout</a>
+      {% else %}
+      <a href="{% url django.contrib.auth.views.login %}">login</a>
+      {% endif %}
+      </div>
+      {% if messages %}
+      <ul class="messagelist">
+          {% for message in messages %}
+          <li>{{ message|escape }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="span-24 content last">{% block content %} {% endblock %}</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+h1. Purpose
+
+If you don't exclusively borrow books at the library, you wind up
+owning books. Some books you want to own forever, others you are just
+temporary owner of until passing them along or reselling them.
+
+The purpose of this is to efficiently reduce clutter due to unused or
+unread books while maximizing profit.
+
+h1. Scope
+- maintain book ownership database
+  - book
+  - location
+  - condition
+  - condition notes (checkbox phrases)
+- market info
+  - amazon sales rank indicates how fast book will sell
+  - price distribution for particular condition
+- sell decision
+  - decide on sales price
+  - list on half.com

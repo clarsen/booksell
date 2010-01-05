@@ -1,0 +1,6 @@
+Django==1.1.1
+# django-debug-toolbar==0.7.0
+# -e ./src/django-debug-toolbar
+django-tagging==0.3
+http://www.aeracode.org/releases/south/south-0.6.2.tar.gz
+lxml

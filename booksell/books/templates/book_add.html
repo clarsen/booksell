@@ -1,0 +1,23 @@
+<div class="span-10">
+<form id="add_book_form" action="{% url books.views.add %}" method="POST">
+  <textarea name="book_id" id="id_book_id" rows=3 cols=20>
+  {{previous_book_id}}
+  </textarea>
+  <select name="id_type" id="id_id_type">
+    <option value="EAN">EAN</option>
+    <option value="ISBN">ISBN</option>
+    <option value="UPC">UPC</option>
+  </select><br/>
+  Location of books: <input type="text" name="location" id="id_location"/>
+  <input type="submit" value="Add"/>
+</form>
+</div>
+<div class="span-14 last message" align="right">
+{% if message %}
+<span id="message" style="display:none; text-align:bottom; color:red"><strong>{{ message }}</strong></span>
+<script type="text/javascript">
+  $("#message").show("slow")
+</script>
+{% endif %}
+</div>
+<hr/>

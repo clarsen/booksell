@@ -7,11 +7,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from books.models import Book, lookup_book
 
+from datetime import datetime
+
 from lxml import etree
 
 # Create your views here.
 def index(request):
-    books = Book.objects.order_by("salesrank").all()
+    books = Book.objects.filter(solddate__isnull = True).order_by("salesrank").all()
     for b in books:
         d = b.distribution()
         if d.has_key('Used/mint'):
@@ -34,8 +36,20 @@ def normalize(id,type):
     return id
 
 def asxml(request,id):
-    b = get_object_or_404(Book,asin=id)
-    b.update_offers()
+    #b = get_object_or_404(Book,asin=id)
+    books = Book.objects.all()
+    for b in books:
+        print "checking",b.title
+        ok = False
+        for o in b.offer_set.all():
+            if o.content_indb != None:
+                ok = True
+                break
+        if not ok:
+            print "updating",b.title
+            b.update_offers()
+
+    #b.update_offers()
     #b.distribution()
     return HttpResponse("", mimetype='application/xml')
 
@@ -46,6 +60,25 @@ def asxml(request,id):
     res = res + "\n</all>\n"
     b.distribution()
     return HttpResponse(res, mimetype='application/xml')
+
+def deletebook(request,id):
+    b = get_object_or_404(Book,asin=id)
+    b.delete()
+    return HttpResponseRedirect(reverse('books.views.index'))
+
+def soldbook(request,id):
+    b = get_object_or_404(Book,asin=id)
+    if request.method == 'POST':
+        b.price = request.POST.get('price',None)
+        b.solddate = request.POST.get('solddate',datetime.now())
+        b.save()
+        request.user.message_set.create(message="Sold %s" % b.title)
+        return HttpResponseRedirect(reverse('books.views.index'))
+    else:
+        return render_to_response('book_sold.html', \
+            { 'book' : b}, \
+            context_instance=RequestContext(request))
+
 
 def add(request):
     if request.method == 'POST':

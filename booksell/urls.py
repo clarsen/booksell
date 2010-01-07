@@ -28,6 +28,8 @@ urlpatterns += patterns('books.views',
     (r'^$','index'),
     (r'^add$','add'),
     (r'^asxml/(?P<id>.*)/$','asxml'),
+    (r'^delete/(?P<id>.*)/$','deletebook'),
+    (r'^sold/(?P<id>.*)$','soldbook'),
 )
 
 if settings.DEBUG:

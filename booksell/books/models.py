@@ -28,6 +28,9 @@ class Book(models.Model):
     created = models.DateTimeField(auto_now_add = True,editable=False)
     modified = models.DateTimeField(auto_now = True,editable=False)
 
+    solddate = models.DateTimeField(null=True)
+    price = models.DecimalField(max_digits=6,decimal_places=2,null=True)
+
     _xmlcontent = None
 
     def fromxml(self,tree):
@@ -136,11 +139,17 @@ class Book(models.Model):
                     pass
                 seen[offer.listing_id] = 1
                 if not found:
-                    print "ADDING",offer.listing_id
+                    #print "ADDING",offer.listing_id
                     offer.save()
+                else:
+                    #print "UPDATING",offer.listing_id
+                    offer = x
+                    offer.fromxml(o)
+                    offer.save()
+                    
         for o in self.offer_set.all():
             if not seen.has_key(o.listing_id):
-                print "NO LONGER ACTIVE",o.listing_id
+                #print "NO LONGER ACTIVE",o.listing_id
                 o.active = 0
                 o.save()
 
@@ -214,6 +223,8 @@ class Offer(models.Model):
     modified = models.DateTimeField(auto_now = True,editable=False)
     active = models.IntegerField(default=0)
 
+    content_indb = models.TextField(editable = False, null=True)
+
     def fromxml(self,o):
         NSMAP = {'ecs' : o.nsmap[None]}
         self.listing_id = o.xpath("ecs:OfferListing//ecs:OfferListingId", namespaces = NSMAP)[0].text
@@ -222,3 +233,4 @@ class Offer(models.Model):
         self.condition = o.xpath("ecs:OfferAttributes//ecs:Condition", namespaces = NSMAP)[0].text
         self.subcondition = o.xpath("ecs:OfferAttributes//ecs:SubCondition", namespaces = NSMAP)[0].text
         self.active = 1
+        self.content_indb = etree.tostring(o)

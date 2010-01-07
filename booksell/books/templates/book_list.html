@@ -2,7 +2,7 @@
 <div class="book span-24 last">
   <div class="book-image span-2">
     <img src="{{book.image}}" width="{{book.image_width}}" height="{{book.image_height}}"/>
-    <div class="book-detail span-last"><a href="{{book.detail_page}}">details</a>, <a href="{% url books.views.asxml book.asin %}">xml</a></div>
+    <div class="book-detail span-last"><a href="{{book.detail_page}}">details</a> {# <a href="{% url books.views.asxml book.asin %}">xml</a> #}</div>
   </div>
   <div class="span-22 last">
     <div class="book-title span-22 last"><strong>{{book.title}}</strong></div>
@@ -10,6 +10,14 @@
     <div class="push-3 last">Amazon sales rank: {{book.salesrank|intcomma}}</div>
     <div class="span-4">EAN#: {{book.ean}}</div>
     <div class="span-4">Location: {{book.location}}</div>
+    <div class="span-4">
+    {% if perms.books.delete_book %}
+    <a href="{% url books.views.deletebook book.asin %}" class="imglink"><span class="ss_sprite ss_book_delete"> &nbsp; </span></a>
+    {% endif %}
+    {% if perms.books.change_book %}
+    <a href="{% url books.views.soldbook book.asin %}" class="imglink"><span class="ss_sprite ss_package_go"> &nbsp; </span></a>
+    {% endif %}
+    </div>
     
     <div class="span-22 last"><hr/></div>
     <div class="price-label span-3 pull-2" align="right">List Price</div>

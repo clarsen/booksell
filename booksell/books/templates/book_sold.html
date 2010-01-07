@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="span-10">
+<form id="sell_book_form" action="{% url books.views.soldbook book.asin %}" method="POST">
+  Sales price: <input type="text" name="price" id="id_price" value="{{b.price}}"/><br/>
+  Date: <input type="text" name="solddate" id="id_solddate" value="{{b.solddate}}"/><br/>
+  <input type="submit" value="Sold"/>
+</form>
+</div>
+<hr/>
+{% endblock %}

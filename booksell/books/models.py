@@ -175,10 +175,10 @@ class Book(models.Model):
                 med = quantile(bycond[k],0.5)
                 p75 = quantile(bycond[k],0.75)
                 max = quantile(bycond[k],1)
-                print k,"N=%d, %03.2f<< %03.2f - %03.2f - %03.2f >>%03.2f" % (len(bycond[k]),min,p25,med,p75,max)
+                #print k,"N=%d, %03.2f<< %03.2f - %03.2f - %03.2f >>%03.2f" % (len(bycond[k]),min,p25,med,p75,max)
                 dist[k] = (len(bycond[k]),Decimal("%3.2f" % min), Decimal("%3.2f" % p25), Decimal("%3.2f" % med), Decimal("%3.2f" % p75), Decimal("%3.2f" % max))
             else:
-                print k,"%03.2f" % bycond[k][0]
+                #print k,"%03.2f" % bycond[k][0]
                 dist[k] = (1,"","",Decimal("%3.2f" % bycond[k][0]),"","")
         self._distribution = dist
         return dist

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load tagging_tags %}
+
+{% block content %}
+
+<div id="span-24 last">
+{% for t in tags %}
+{% tagged_objects t in books.Condition as conds %}
+<div class="span-22"><h2>{{ t }}</h2></div><div class="clear"/>
+{% for c in conds %}
+<div class="span-22">
+<a href="{% url books.views.condition_status c.id,1 %}" class="imglink"><span class="ss_sprite ss_accept"> &nbsp; </span></a>
+<a href="{% url books.views.condition_ignore c.id %}" class="imglink">ignore all above </span></a>
+{{ c.conditionnote }} 
+<b>Tags:</b> {{ c.tags }}
+<a href="{% url books.views.condition_edit c.id %}" class="imglink">edit </span></a>
+</div>
+{% endfor %}
+{% endfor %}
+<hr/>
+<div class="span-22"><h2>Untagged</h2></div><div class="clear"/>
+
+{% for c in untagged_conds %}
+<div class="span-22">
+{% if c.picklist %}
+{% else %}
+<a href="{% url books.views.condition_status c.id,1 %}" class="imglink"><span class="ss_sprite ss_accept"> &nbsp; </span></a>
+<a href="{% url books.views.condition_ignore c.id %}" class="imglink">ignore all above </span></a>
+{% endif %}
+{{ c.conditionnote }} 
+{% if c.tags %}
+<b>Tags:</b> {{ c.tags }}
+{% endif %}
+{% if c.picklist %}
+<a href="{% url books.views.condition_edit c.id %}" class="imglink">edit </span></a>
+{% endif %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}

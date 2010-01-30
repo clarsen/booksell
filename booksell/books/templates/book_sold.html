@@ -3,8 +3,10 @@
 
 <div class="span-10">
 <form id="sell_book_form" action="{% url books.views.soldbook book.asin %}" method="POST">
-  Sales price: <input type="text" name="price" id="id_price" value="{{b.price}}"/><br/>
-  Date: <input type="text" name="solddate" id="id_solddate" value="{{b.solddate}}"/><br/>
+  Date: <input type="text" name="solddate" id="id_solddate" value="{{book.solddate}}"/><br/>
+  Sales price: <input type="text" name="price" id="id_price" value="{{book.price}}"/><br/>
+  Actual shipping: <input type="text" name="shipping" id="id_shipping" value="{{book.shipping}}"/><br/>
+  Total: <input type="text" name="total_rev" id="id_total_rev" value="{{book.total_rev}}"/><br/>
   <input type="submit" value="Sold"/>
 </form>
 </div>

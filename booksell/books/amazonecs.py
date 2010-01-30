@@ -45,7 +45,7 @@ def lookup_offers_asin(item_id, page):
     querystring = encode_query(params)
 
     url = 'http://' + hostname + requesturi + '?' + querystring
-    print 'Signed URL is ', url
+    #print 'Signed URL is ', url
     res = urllib2.urlopen(url).read()
     #print "got",res
     r = etree.fromstring(res)

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<form id="edit_condition_form" action="{% url books.views.condition_edit cond.id %}" method="POST">
+<div class="span-24 last">
+<div class="span-12">
+<textarea name="condition_note" id="id_condition_note" rows="2" cols="40">
+{{ cond.conditionnote }}
+</textarea>
+</div>
+<div class="clear"/>
+<div class="span-5">
+Tags: <input name="condition_tags" id="id_condition_tags" value="{{ cond.tags}}"/>
+</div>
+<div class="clear"/>
+<div class="span-5">
+<input type="submit" name="submit" value="Update"/>
+</div>
+
+</div>
+</form>
+{% endblock %}

@@ -4,3 +4,9 @@ Django==1.1.1
 django-tagging==0.3
 http://www.aeracode.org/releases/south/south-0.6.2.tar.gz
 lxml
+mechanize
+BeautifulSoup==3.0.8
+
+# scrapemark doesn't seem to work:
+#   svn+http://scrapemark.googlecode.com/svn/trunk#egg=scrapemark
+#   http://arshaw.com/downloads/scrapemark/scrapemark-0.9.tar.gz

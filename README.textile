@@ -19,3 +19,8 @@ h1. Scope
 - sell decision
   - decide on sales price
   - list on half.com
+
+Reminders
+migrating models:
+python manage.py startmigration books DESCRIPTION --auto --settings=production
+python manage.py migrate --settings=production

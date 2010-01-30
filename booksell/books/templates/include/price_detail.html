@@ -1,0 +1,40 @@
+{% if book.mint_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Like New</div>
+<div class="book-price list-price span-6">qty {{book.mint_n}}: {{ book.mint_min}} - {{book.mint_p25}} - {{book.mint_med}} - {{ book.mint_p75 }} - {{ book.mint_max }}</div>
+{% endif %}
+{% if book.h_mint_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Brand New (Half.com)</div>
+<div class="book-price list-price span-6">qty {{book.h_mint_n}}: {{ book.h_mint_min}} - {{book.h_mint_p25}} - {{book.h_mint_med}} - {{ book.h_mint_p75 }} - {{ book.h_mint_max }}</div>
+{% endif %}
+{% if book.vg_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Very Good</div>
+<div class="book-price list-price span-6">qty {{book.vg_n}}: {{ book.vg_min}} - {{book.vg_p25}} - {{book.vg_med}} - {{ book.vg_p75 }} - {{ book.vg_max }}</div>
+{% endif %}
+{% if book.h_vg_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Very Good (half.com)</div>
+<div class="book-price list-price span-6">qty {{book.h_vg_n}}: {{ book.h_vg_min}} - {{book.h_vg_p25}} - {{book.h_vg_med}} - {{ book.h_vg_p75 }} - {{ book.h_vg_max }}</div>
+{% endif %}
+{% if book.g_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Good</div>
+<div class="book-price list-price span-6">qty {{book.g_n}}: {{ book.g_min}} - {{book.g_p25}} - {{book.g_med}} - {{ book.g_p75 }} - {{ book.g_max }}</div>
+{% endif %}
+{% if book.h_g_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Good (half.com)</div>
+<div class="book-price list-price span-6">qty {{book.h_g_n}}: {{ book.h_g_min}} - {{book.h_g_p25}} - {{book.h_g_med}} - {{ book.h_g_p75 }} - {{ book.h_g_max }}</div>
+{% endif %}
+{% if book.a_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Acceptable</div>
+<div class="book-price list-price span-6">qty {{book.a_n}}: {{ book.a_min}} - {{book.a_p25}} - {{book.a_med}} - {{ book.a_p75 }} - {{ book.a_max }}</div>
+{% endif %}
+{% if book.h_a_n %}
+<div class="clear"></div>
+<div class="price-label span-3 pull-2" align="right">Used/Acceptable (half.com)</div>
+<div class="book-price list-price span-6">qty {{book.h_a_n}}: {{ book.h_a_min}} - {{book.h_a_p25}} - {{book.h_a_med}} - {{ book.h_a_p75 }} - {{ book.h_a_max }}</div>
+{% endif %}

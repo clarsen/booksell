@@ -70,6 +70,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'booksell.urls'
 LOGIN_REDIRECT_URL = '/'
 AWS_ECS_VERSION = '2009-03-31'
+EBAY_XML_GATEWAY = 'api.ebay.com'
+EBAY_XML_DIR = '/ws/api.dll'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -87,5 +89,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.humanize',
     'south',
+    'tagging',
     'books'
 )

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block pageheader %}
+{# <div class="span-12 prepend-6 append-6 last" align="center"><h3>Sell List</h3></div> #}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" action="">
+{{ formset.management_form }}
+<div class="span-24 last">
+<div class="span-4"><b>Title</b></div>
+<div class="span-4"><b>Location</b></div>
+<div class="span-3"><b>Condition</b></div>
+<div class="span-3"><b>Old price</b></div>
+<div class="span-3"><b>Price</b></div>
+<div class="clear"/>
+{% for form in formset.forms %}
+{{ form.id }}
+<div class="span-4">{{ form.title }}</div>
+<div class="span-4">{{ form.location }}</div>
+<div class="span-3">{{ form.condition }}</div>
+<div class="span-3">{{ form.oldprice }}</div>
+<div class="span-3">{{ form.price }}</div>
+<div class="clear"></div>
+{% with form.instance as book %}
+<div class="span-3">EAN: {{ form.instance.isbn }}</div>
+<div class="clear"></div>
+<div class="span-1">&nbsp;</div>
+<div class="span-20 last">
+{% include "include/price_detail.html" %}
+</div>
+<div class="clear"></div>
+{% endwith %}
+{% endfor %}
+<div class="span-2"><input type="submit" name="submit" value="Update"/></div>
+<div class="span-2"><input type="submit" name="submit" value="Post to half.com"/></div>
+</div>
+<div class="clear"/>
+</form>
+{% endblock %}

@@ -19,12 +19,15 @@
   </head>
   <body id="pagebody">
     <div class="container">
-      <div class="span-24 header last">{% block header %}<h1>Sell list</h1>{% endblock %}</div>
+      <div class="span-24 header last">{% block header %}<h1><a href="{% url books.views.index %}">Sell list</a></h1>{% endblock %}</div>
       <div class="push-1 last">
       {% if user.is_authenticated %}
       Welcome, {{ user }}:
       {% if perms.books.add_book %}
         <a href="{% url books.views.add %}">add book(s)</a>/
+        <a href="{% url books.views.bulk_update %}">bulk update books</a>/
+        <a href="{% url books.views.conditions %}">conditions</a>/
+        <a href="{% url books.views.index_sold %}">sold books</a>/
       {% endif %}
       <a href="{% url booksell.views.logout_view %}">logout</a>
       {% else %}

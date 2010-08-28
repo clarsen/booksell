@@ -1,17 +1,33 @@
-<div class="span-10">
+{% extends "base.html" %}
+
+{% block content %}
 <form id="add_book_form" action="{% url books.views.add %}" method="POST">
+{{ form.id }}
+<div class="span-14 clear">
   <textarea name="book_id" id="id_book_id" rows=3 cols=20>
   {{previous_book_id}}
   </textarea>
+</div>
+<div class="span-14 clear">
   <select name="id_type" id="id_id_type">
     <option value="EAN">EAN</option>
     <option value="ISBN">ISBN</option>
     <option value="UPC">UPC</option>
-  </select><br/>
-  Location of books: <input type="text" name="location" id="id_location"/>
-  <input type="submit" value="Add"/>
-</form>
+  </select>
+<div class="span-14 clear">
+{{ form.location.label_tag }}: {{ form.location }}
 </div>
+<div class="span-14 clear">
+{{ form.condition.label_tag }}: {{ form.condition }}
+</div>
+<div class="span-14 clear">
+{{ form.owner.label_tag }}: {{ form.owner }}
+</div>
+<div class="span-2 clear">
+<input type="submit" value="Add"/>
+</div>
+</form>
+
 <div class="span-14 last message" align="right">
 {% if message %}
 <span id="message" style="display:none; text-align:bottom; color:red"><strong>{{ message }}</strong></span>
@@ -21,3 +37,4 @@
 {% endif %}
 </div>
 <hr/>
+{% endblock %}

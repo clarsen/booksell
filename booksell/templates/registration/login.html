@@ -8,7 +8,7 @@ You need to login to view this page.
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-<form method="post" action=".">
+<form method="post" action=".">{% csrf_token %}
 <table>
 <tr><td><label for="username">username:</label></td><td>{{ form.username }}</td></tr>
 <tr><td><label for="password">password:</label></td><td>{{ form.password }}</td></tr>

@@ -25,9 +25,11 @@
       Welcome, {{ user }}:
       {% if perms.books.add_book %}
         <a href="{% url books.views.add %}">add book(s)</a>/
-        <a href="{% url books.views.bulk_update %}">bulk update books</a>/
+        <a href="{% url books.views.bulk_update %}">bulk update prices</a>/
+        <a href="{% url books.views.bulk_update_location %}">bulk update location</a>/
         <a href="{% url books.views.conditions %}">conditions</a>/
         <a href="{% url books.views.index_sold %}">sold books</a>/
+        <a href="{% url books.views.list_as_csv %}">CSV dump</a>/
       {% endif %}
       <a href="{% url booksell.views.logout_view %}">logout</a>
       {% else %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.template import Context, Template, RequestContext, loader
+from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -26,10 +27,34 @@ def index(request):
         { 'books' : books}, \
         context_instance=RequestContext(request))
 
+def list_as_csv(request):
+    books = Book.objects.all()
+    res = "location,owner,title\n"
+    for b in books:
+        res = res + "%s,%s,%s\n" % (b.location,b.owner,b.title.replace(","," "))
+    return HttpResponse(res, mimetype='text/csv')
+
 def index_sold(request):
     books = Book.objects.filter(solddate__isnull = False).order_by("-solddate").all()
     return render_to_response('index.html', \
         { 'books' : books}, \
+        context_instance=RequestContext(request))
+
+def bulk_update_location(request):
+    BookFormSet = modelformset_factory(Book, fields=['title','location','owner','price','condition'], extra=0)
+    if request.method == 'POST':
+        formset = BookFormSet(request.POST)
+        if formset.is_valid():
+            print "valid"
+            updated = formset.save()
+        else:
+            print "was not valid"
+    else:
+        books = Book.objects.filter(solddate__isnull = True).order_by('location','title')
+        formset = BookFormSet(queryset = books)
+
+    return render_to_response('bulk_update_location.html', \
+        { 'formset' : formset}, \
         context_instance=RequestContext(request))
 
 def bulk_update(request):
@@ -81,7 +106,10 @@ def bulk_update(request):
                             already = True
                     if not already:
                         p,s = prices[3]
-                        newprice = p - .01
+                        if p > 0.75:
+                            newprice = p - .01
+                        else:
+                            newprice = p
                         print '  update price',newprice
                         b.update_price(newprice)
                 set_up_dist(b,b.condition)
@@ -127,9 +155,10 @@ def editbook(request,id):
 
     if request.method == 'POST':
         if request.POST.get('submit',None) == "Update Price and Condition":
-            b.price = request.POST.get('price',None)
+            b.price = request.POST.get('price','')
             b.location = request.POST.get('location',None)
             b.condition = request.POST.get('condition',None)
+            b.owner = User.objects.get(id=request.POST.get('owner','').strip())
             request.user.message_set.create(message="Updated %s" % b.title)
         elif request.POST.get('submit',None) == "Update":
             #print "would update",b.halfid,"on Half.com"
@@ -301,8 +330,11 @@ def soldbook(request,id):
 
 
 def add(request):
+    location = ''
+
     if request.method == 'POST':
         #print request
+        form = BookForm(request.POST)
         bookids = request.POST.get('book_id','').strip().splitlines()
         type = request.POST.get('id_type','')
         for b in bookids:
@@ -320,16 +352,27 @@ def add(request):
                 book = lookup_book(b,type)
                 if book:
                     request.user.message_set.create(message="Added %s (%s)" % (b, book.title))
+                    book.condition = request.POST.get('condition','').strip()
                     book.location = request.POST.get('location','').strip()
+                    location = book.location
+                    book.owner = User.objects.get(id=request.POST.get('owner','').strip())
                     book.save()
-                    book.update_offers()
+                    #book.update_offers()
+                    form = BookForm(instance = book)
                 else:
                     request.user.message_set.create(message="%s not found" % b)
-        return HttpResponseRedirect(reverse('books.views.index'))
+    else:
+        b = Book()
+        b.condition = 'VERY_GOOD'
+        b.owner = User.objects.get(username = 'clarsen')
+        form = BookForm(instance=b)
+    #return HttpResponseRedirect(reverse('books.views.add'))
 #        return HttpResponseRedirect(reverse('books.views.index'))
         
-    return render_to_response('index.html', \
-        { 'books' : []}, \
+    return render_to_response('book_add.html', \
+        { 'books' : [], \
+         'location': location, \
+         'form' : form }, \
         context_instance=RequestContext(request))
 
 add = permission_required('books.add_book')(add)

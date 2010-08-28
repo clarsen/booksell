@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.db import models
+from django.contrib.auth.models import User
 
 from lxml import etree
 
@@ -41,6 +42,7 @@ def map_condition_to_half(cond):
 def map_amazon_cond_to_internal(cond,subcond):
     m = { 'New/new' : 'BRAND_NEW', 
     'Collectible/mint' : 'COLLECT_LIKE_NEW',
+    'Collectible/acceptable' : 'COLLECT_ACCEPTABLE',
     'Collectible/good' : 'COLLECT_GOOD',
     'Collectible/verygood' : 'COLLECT_VERY_GOOD',
     'Used/mint' : 'LIKE_NEW',
@@ -123,6 +125,7 @@ class Book(models.Model):
     created = models.DateTimeField(auto_now_add = True,editable=False)
     modified = models.DateTimeField(auto_now = True,editable=False)
 
+    owner = models.ForeignKey(User,null=True,blank=True)
     solddate = models.DateTimeField(null=True,blank=True)
     price = models.DecimalField(max_digits=6,decimal_places=2,null=True,blank=True)
     oldprice = models.DecimalField(max_digits=6,decimal_places=2,null=True,blank=True)
@@ -431,7 +434,7 @@ def lookup_book(book_id, id_type):
 class BookForm(ModelForm):
     class Meta:
         model = Book
-        fields = ['location', 'condition', 'price' ]
+        fields = ['location', 'condition', 'price', 'owner' ]
 
 class ConditionForBook(models.Model):
     book = models.ForeignKey(Book)

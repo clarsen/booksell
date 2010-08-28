@@ -3,7 +3,7 @@
 {% load tagging_tags %}
 
 {% block content %}
-<form id="edit_book_form" action="{% url books.views.editbook book.asin %}" method="POST">
+<form id="edit_book_form" action="{% url books.views.editbook book.asin %}" method="POST">{% csrf_token %}
 <div id="book_list span-24 last">
 <div class="book span-24 last">
  <div class="span-5">
